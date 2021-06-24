@@ -1,0 +1,162 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500&display=swap');
+
+*{
+margin:0;
+padding:0;
+font-family: 'Quicksand', sans-serif;
+}
+
+body{
+background-color:#a5ffd6;
+}
+
+
+/* Button used to open the contact form - fixed at the bottom of the page */
+.open-button {
+  background-color: #555;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  z-index: 9;
+
+}
+
+/* Add styles to the form container */
+.form-container {
+    display:flex;
+    justify-content:center;
+    padding: 10px;
+
+
+}
+
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 8px 25px;
+  border: none;
+  cursor: pointer;
+  margin:10px;
+  opacity: 0.8;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+li{
+list-style-type:none;
+margin:5px;
+padding:6px 13px;
+}
+    </style>
+</head>
+<body>
+
+
+<div class="container-fluid head">
+
+</div>
+    <div class="container">
+
+            <p class="display-5 p-4 title text-center">User Detail page</p>
+        <div class="row justify-content-end">
+        <div class="col-1">
+            <a href="{% url  'delete' %}" class="btn btn-danger">DELETE</a>
+           </div>
+            <div class="col-1">
+            <a class="btn btn-danger" href="{% url 'logout'%}" >Logout</a>
+            </div>
+        </div>
+        <table class="table">
+                 <p class="display-7 ">HELLO {{user.username}} !!</p>
+              <thead>
+                <tr>
+                  <th scope="col">First Name</th>
+                  <th scope="col">Last Name</th>
+                  <th scope="col">Username</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Activity</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                    <td>{%if user.first_name %}{{user.first_name}}{%else%}Blank Entry{%endif%}</td>
+                  <td>{%if user.last_name %}{{user.last_name}}{%else%}Blank Entry{%endif%}</td>
+                  <td>{%if user.username %}{{user.username}}{%else%}Blank Entry{%endif%}</td>
+                  <td>{%if user.email %}{{user.email}}{%else%}Blank Entry{%endif%}</td>
+                    <td> <button class="open-button" onclick="openForm()">Edit</button></td>
+                </tr>
+
+              </tbody>
+            </table>
+            </div>
+
+
+
+    <div class="form-popup" id="myForm">
+        <div class="form-container">
+    <form method="post" >
+      {% csrf_token %}
+      <div class="container d-flex">
+        <p class="heading mx-auto">Edit Profile</p>
+      <button class="btn-close mx-auto " onclick="closeForm()"></button>
+
+      </div>
+              {{ form.username| as_crispy_field }}
+                <div class="row">
+                    <div class="col-6">
+                        {{ form.first_name|as_crispy_field}}
+                    </div>
+                        <div class="col-6">
+                        {{ form.last_name|as_crispy_field}}
+                    </div>
+                </div>
+                {{form.email | as_crispy_field}}
+
+    <button type="submit" class="btn save">Save</button>
+
+    </form>
+    </div>
+    </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(".toast").toast('show');
+    });
+
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+</script>
+</body>
+</html>
