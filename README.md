@@ -12,3 +12,9 @@
  * User Detail
  
  ![user](https://user-images.githubusercontent.com/20657303/123231860-391a4b80-d4f6-11eb-8a55-d986467e2620.jpg)
+
+# How to Run
+ - Clone the Repo
+ - Create a Virtual Enviroment
+ - Import the Dependencies
+ - Run 
